@@ -61,6 +61,7 @@ class RIASECKeywords(Document):
     keyword: str
     keyword_type: str
 
+
 class ScalesReference(Document):
     scale_id: Indexed(str)
     scale_name: str

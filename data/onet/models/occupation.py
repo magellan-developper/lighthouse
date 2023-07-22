@@ -26,8 +26,7 @@ class MultiRatingBase(SingleRatingBase):
     standard_error: Optional[float]
     lower_ci_bound: Optional[float]
     upper_ci_bound: Optional[float]
-    recommend_suppress: Optional[str]
-    not_relevant: Optional[str]
+    recommend_suppress: Optional[bool]
 
 
 class Metadata(BaseModel):
@@ -47,7 +46,8 @@ class TaskRating(BaseModel):
     lower_ci_bound: Optional[float]
     upper_ci_bound: Optional[float]
     recommend_suppress: Optional[str]
-    not_relevant: Optional[bool]
+    date_updated: datetime
+    domain_source: str
 
 
 class Task(BaseModel):
@@ -69,48 +69,51 @@ class TechnologySkill(BaseModel):
 
 
 class WorkContext(MultiRatingBase):
-    category: str
+    category: Optional[int]
 
 
 class Tool(BaseModel):
     example: str
-    commodity_code: str
+    commodity_code: str  # UNSPSC
 
 
 class EmergingTask(BaseModel):
     task: str
     category: str
     original_task_id: Optional[int]
-    writein_total: int
+    write_in_total: int
     date_updated: datetime
     domain_source: str
 
 
 class RelatedOccupation(BaseModel):
     related_onetsoc_code: str
+    relatedness_tier: str
     related_index: int
 
 
-# should include interests_illus_occupation and interests_illus_activities
 class Occupation(Document):
     onetsoc_code: Indexed(str)
-    title: Title
-    alternate_titles: list[str]
-    metadata: list[Metadata]
-    abilities: list[MultiRatingBase]
-    education_training_experience: list[MultiRatingBase]
-    emerging_tasks: list[EmergingTask]
-    interests: list[SingleRatingBase]
-    job_zone: int
-    knowledge: list[MultiRatingBase]
-    related_occupations: list[RelatedOccupation]
-    skills: list[MultiRatingBase]
-    tasks: list[Task]
-    tools_used: list[Tool]
-    technology_skills: list[TechnologySkill]
-    work_activities: list[MultiRatingBase]
-    work_styles: list[MultiRatingBase]
-    work_values: list[SingleRatingBase]
+    title: str
+    description: str
+    alternate_titles: list[str] = []
+    reported_titles: list[str] = []
+    metadata: list[Metadata] = []
+    abilities: list[MultiRatingBase] = []
+    education_training_experience: list[MultiRatingBase] = []
+    emerging_tasks: list[EmergingTask] = []
+    interests: list[SingleRatingBase] = []
+    job_zone: Optional[int] = None
+    knowledge: list[MultiRatingBase] = []
+    related_occupations: list[RelatedOccupation] = []
+    skills: list[MultiRatingBase] = []
+    tasks: list[Task] = []
+    tools_used: list[Tool] = []
+    technology_skills: list[TechnologySkill] = []
+    work_activities: list[MultiRatingBase] = []
+    work_contexts: list[WorkContext] = []
+    work_styles: list[MultiRatingBase] = []
+    work_values: list[SingleRatingBase] = []
 
 
 class ContentModelReference(Document):

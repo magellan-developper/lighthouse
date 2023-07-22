@@ -1,5 +1,5 @@
 from data.onet.loader.utils import load_csv, load_document
-from data.onet.models.reference import UNSPSC, DWA, IWA, RIASECKeywords, LevelScaleAnchor, ScalesReference
+from data.onet.models.reference import *
 
 
 async def load_unspsc():
@@ -29,22 +29,22 @@ async def load_iwa_reference():
     await load_document(IWA, mapper, 'IWA Reference.txt')
 
 
-def load_riasec_keywords():
+async def load_riasec_keywords():
     mapper = {'element_id': 'Element ID',
-              'iwa_id':  'IWA ID',
               'keyword': 'Keyword',
-              'keyword_type':  'Keyword Type'}
+              'keyword_type': 'Keyword Type'}
     await load_document(RIASECKeywords, mapper, 'RIASEC Keywords.txt')
 
 
-def load_level_scale_anchors():
+async def load_level_scale_anchors():
     mapper = {'element_id': 'Element ID',
               'scale_id': 'Scale ID',
               'anchor_value': 'Anchor Value',
               'anchor_description': 'Anchor Description'}
     await load_document(LevelScaleAnchor, mapper, 'Level Scale Anchors.txt')
 
-def load_scales_reference():
+
+async def load_scales_reference():
     mapper = {'scale_id': 'Scale ID',
               'scale_name': 'Scale Name',
               'minimum': 'Minimum',
@@ -52,22 +52,28 @@ def load_scales_reference():
     await load_document(ScalesReference, mapper, 'Scales Reference.txt')
 
 
-class ContextCategory(Document):
-    element_id: str
-    category: int
-    category_description: str
-
-class JobZoneReference(Document):
-    job_zone: Indexed(int)
-    name: str
-    experience: str
-    education: str
-    job_training: str
-    examples: str
-    svp_range: str
+async def load_job_zone_reference():
+    mapper = {'job_zone': 'Job Zone',
+              'name': 'Name',
+              'experience': 'Experience',
+              'education': 'Education',
+              'job_training': 'Job Training',
+              'examples': 'Examples',
+              'svp_range': 'SVP Range'}
+    await load_document(JobZoneReference, mapper, 'Job Zone Reference.txt')
 
 
-class TaskCategory(Document):
-    scale_id: str
-    category: int
-    category_description: str
+async def load_task_categories():
+    mapper = {'scale_id': 'Scale ID',
+              'category': 'Category',
+              'category_description': 'Category Description'}
+    await load_document(TaskCategory, mapper, 'Task Categories.txt')
+
+
+async def load_context_categories():
+    mapper = {'element_id': 'Element ID',
+              'scale_id': 'Scale ID',
+              'category': 'Category',
+              'category_description': 'Category Description'}
+    await load_document(ContextCategory, mapper, 'Education, Training, and Experience Categories.txt')
+    await load_document(ContextCategory, mapper, 'Work Context Categories.txt')
