@@ -1,25 +1,22 @@
-from fastapi import FastAPI, Depends
-from motor.motor_asyncio import AsyncIOMotorClient
-from starlette.requests import Request
+from fastapi import FastAPI
+from app.routes import occupation
+from data.database import init_db
+
+import uvicorn
 
 app = FastAPI()
+app.include_router(occupation.router)
 
 
 @app.on_event("startup")
-async def startup_event():
-    app.state.mongodb = AsyncIOMotorClient('mongodb://localhost:27017')
+async def start_db():
+    await init_db()
 
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    app.state.mongodb.close()
+@app.get('/')
+def home():
+    return {'message': 'Home Page'}
 
 
-async def get_db(request: Request):
-    return request.app.state.mongodb
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: str, db=Depends(get_db)):
-    document = await db['mydb']['mycollection'].find_one({"_id": item_id})
-    return {"item_id": item_id, "payload": document}
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0', port=8000)

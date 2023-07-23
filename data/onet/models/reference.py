@@ -3,6 +3,9 @@ from beanie import Document, Indexed
 
 # work context category, ete category
 class ContextCategory(Document):
+    class Settings:
+        name = "context_category"
+
     element_id: Indexed(str)
     scale_id: str
     category: int
@@ -10,6 +13,9 @@ class ContextCategory(Document):
 
 
 class UNSPSC(Document):
+    class Settings:
+        name = "unspsc"
+
     commodity_code: Indexed(str)
     commodity_title: str
     class_code: int
@@ -21,6 +27,9 @@ class UNSPSC(Document):
 
 
 class DWA(Document):
+    class Settings:
+        name = "dwa"
+
     element_id: str
     iwa_id: str
     dwa_id: str
@@ -28,12 +37,18 @@ class DWA(Document):
 
 
 class IWA(Document):
+    class Settings:
+        name = "iwa"
+
     element_id: str
     iwa_id: str
     iwa_title: str
 
 
 class LevelScaleAnchor(Document):
+    class Settings:
+        name = "level_scale_anchor"
+
     element_id: str
     scale_id: str
     anchor_value: int
@@ -41,6 +56,9 @@ class LevelScaleAnchor(Document):
 
 
 class JobZoneReference(Document):
+    class Settings:
+        name = "job_zone_reference"
+
     job_zone: Indexed(int)
     name: str
     experience: str
@@ -51,19 +69,33 @@ class JobZoneReference(Document):
 
 
 class TaskCategory(Document):
+    class Settings:
+        name = "task_category"
+
     scale_id: str
     category: int
     category_description: str
 
 
 class RIASECKeywords(Document):
+    class Settings:
+        name = "riasec_keywords"
+
     element_id: str
     keyword: str
     keyword_type: str
 
 
 class ScalesReference(Document):
+    class Settings:
+        name = "scales_reference"
+
     scale_id: Indexed(str)
     scale_name: str
     minimum: int
     maximum: int
+
+
+def get_reference_models():
+    return [ContextCategory, JobZoneReference, TaskCategory,
+            ScalesReference, UNSPSC, DWA, IWA, RIASECKeywords, LevelScaleAnchor]

@@ -35,9 +35,9 @@ async def load_onet_data():
                                        ScalesReference, UNSPSC, DWA, IWA, RIASECKeywords, LevelScaleAnchor])
 
     await load_occupation()
-    # await load_content_model_reference()
-    # await load_mapping()
-    # await load_references()
+    await load_content_model_reference()
+    await load_mapping()
+    await load_references()
 
 
 if __name__ == "__main__":

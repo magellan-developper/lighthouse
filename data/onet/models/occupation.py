@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
+import pymongo
 from beanie import Document, Indexed
 from pydantic import BaseModel
 
@@ -93,6 +94,13 @@ class RelatedOccupation(BaseModel):
 
 
 class Occupation(Document):
+    class Settings:
+        name = "occupation"
+        indexes = [
+            ('title', pymongo.TEXT),
+            ('description', pymongo.TEXT)
+        ]
+
     onetsoc_code: Indexed(str)
     title: str
     description: str
@@ -117,6 +125,13 @@ class Occupation(Document):
 
 
 class ContentModelReference(Document):
+    class Settings:
+        name = "content_model_reference"
+
     element_id: Indexed(str)
     element_name: str
     description: str
+
+
+def get_occupation_models():
+    return [ContentModelReference, Occupation]
