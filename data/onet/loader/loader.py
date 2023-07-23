@@ -28,7 +28,7 @@ async def load_mapping():
 
 
 async def load_onet_data():
-    client = AsyncIOMotorClient("mongodb://127.0.0.1:27017")
+    client = AsyncIOMotorClient('mongodb+srv://uofteceelcano:Dd8TbR5VaPkzuFVU@elcanocluster.bwllguc.mongodb.net/?retryWrites=true&w=majority')
     await init_beanie(database=client['lighthouse'],
                       document_models=[InterestMapping, Mapping, Occupation, ContentModelReference,
                                        ContextCategory, JobZoneReference, TaskCategory,

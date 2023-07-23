@@ -8,7 +8,7 @@ from data.onet.models.occupation import get_occupation_models
 
 
 async def init_db():
-    client = AsyncIOMotorClient("mongodb://127.0.0.1:27017")
+    client = AsyncIOMotorClient('mongodb+srv://uofteceelcano:Dd8TbR5VaPkzuFVU@elcanocluster.bwllguc.mongodb.net/?retryWrites=true&w=majority')
     document_models = []
     document_models += get_occupation_models()
     document_models += get_reference_models()
