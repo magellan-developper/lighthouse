@@ -16,7 +16,7 @@ class RelatedOccupationProjection(BaseModel):
 
 
 @router.get('/')
-async def get_all_occupations(prefix: str | None = None, limit: int = 10):
+async def get_all_occupations(prefix: Optional[str] = None, limit: int = 10):
     if prefix is not None:
         query = Occupation.find_many({"$text": {"$search": prefix}})
     else:
