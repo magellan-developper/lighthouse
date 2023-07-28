@@ -1,7 +1,10 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL / Data files
 __pycache__/
 *.py[cod]
 *$py.class
+*.txt
+*.xlsx
+data/oews/raw_data
 
 # C extensions
 *.so
